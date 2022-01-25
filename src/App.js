@@ -3,7 +3,7 @@ import { Route, Switch} from 'react-router-dom'
 import "./Sass/style.scss";
 import Login from "./components/Login";
 import SignUp from './components/SignUp'
-import Upload from './components/Upload';
+import Upload from './components/TakePicture';
 import ChoosePlan from './components/ChoosePlan';
 import ForgotPassword from './components/ForgotPassword'
 import CreateNewpassword from "./components/CreateNewpassword";

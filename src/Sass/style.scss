@@ -1,13 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Quicksand:wght@700&display=swap');
-$font-stack: 'Poppins'sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Quicksand:wght@500&display=swap');
+$font-stack: 'Poppins',
+sans-serif;
 $backdrop-background_color:rgba(21, 12, 33, 0.81);
-$btn_background-color : #5D5FEF;
+$btn_background-color : #1207AB;
 $text-color:#423A4B;
 $alt-text-color:white;
-$label-color:rgba(0, 0, 0, 0.5);
+$label-color:rgba(3, 3, 3, 0.5);
 $font-size :18px;
 $border-color:#DFDFDF;
-$input-bg-color:#F5F7FA;
+$input-bg-color:#Fff;
+
+/*the container must be positioned relative:*/
+.custom-select {
+    position: relative;
+    font-family: Arial;
+    width: 100%;
+}
+
+.custom-select select {
+    display: none;
+    /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background-color: #fff;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #000 transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #000 transparent;
+    top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div {
+    min-height: 45px;
+    max-height: 30px;
+    border-bottom: 1px solid #A9A9A9;
+    margin-bottom: 1.5em;
+}
+
+.select-selected {
+    color: #939393;
+    margin-bottom: 1.5em;
+    border: 1px solid #A9A9A9;
+    box-sizing: border-box;
+    padding: 0 5px 0 5px;
+    border-radius: 5px;
+    min-height: 45px;
+    max-height: 30px;
+    width: 100%;
+    max-width: 100%;
+    user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 @mixin flex {
     display: flex;
@@ -24,8 +101,10 @@ $input-bg-color:#F5F7FA;
 
 @mixin backdrop {
     @include flex();
+    padding: 1em 0;
+    height: 100%;
+    min-height: 100vh;
     width: 100%;
-    height: 100vh;
     background-color: $backdrop-background_color;
 }
 
@@ -37,40 +116,84 @@ $input-bg-color:#F5F7FA;
     font-size: $font-size;
     border-radius: 15px;
     padding: 2em 0;
+    margin: 4vh 0;
 }
 
 @mixin flex_btn {
-    width: 85%;
+    width: 90%;
     @include flex();
     justify-content: space-between;
+    margin-bottom: 1em;
 }
 
 @mixin flex_btn2 {
     @include flex_btn();
     width: 70%;
+    small{
+        font-size: 18px;
+    }
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: $label-color;
+
+    img {
+        margin: {
+            right: 0.5em;
+        }
+    }
 }
 
 @mixin btn {
+    background: none;
     border-radius: 5px;
-    width: 47%;
-    height: 5vh;
+    border: 1px solid #423A4B;
+    width: 45%;
+    height: 6vh;
     cursor: pointer;
+    white-space: nowrap;
+    font-size: 10px;
 }
 
 @mixin btn2 {
     @include btn();
     width: 40%;
-    height: 6vh;
+    font-size: 16px;
 }
 
 @mixin active-btn {
     background-color: $btn_background-color;
     color: $alt-text-color;
+
+    &:hover {
+        border: 1px solid $btn_background-color;
+        color: #f8f8fa;
+        background-color: rgb(34, 15, 119);
+        opacity: 0.9;
+    }
+}
+
+.regular {
+    &:hover {
+        background-color: #F5F7FA;
+        box-shadow: 0 2px rgb(194, 192, 192);
+        opacity: 0.8;
+        border: 1px solid #F5F7FA;
+    }
+
+    a {
+        text-decoration: none;
+        color: #423A4B;
+    }
 }
 
 @mixin form {
     @include flex2();
-    width: 85%;
+    width: 90%;
     margin-top: 1em;
 }
 
@@ -103,21 +226,20 @@ $input-bg-color:#F5F7FA;
     box-sizing: border-box;
     padding: 0 5px 0 5px;
     border-radius: 5px;
-    min-height: 50px;
-    max-height: 60px;
+    min-height: 45px;
+    max-height: 30px;
     width: 100%;
     max-width: 100%;
 }
 
 @mixin input2 {
     @include input();
-    margin-bottom: 0.5em;
     padding: 10px;
 }
 
 @mixin continue_btn {
-    @include active-btn();
     @include btn();
+    @include active-btn();
     border: none;
     width: 100%;
     font-size: 18px;
@@ -129,8 +251,8 @@ $input-bg-color:#F5F7FA;
 }
 
 @mixin continue_btn2 {
-    @include continue_btn();
     @include btn2();
+    @include continue_btn();
 }
 
 * {
@@ -149,7 +271,7 @@ html {
 body {
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
     box-sizing: border-box;
     text-decoration: none;
 
@@ -171,6 +293,26 @@ body {
 
 .flex_btn {
     @include flex_btn();
+    small{
+        font-size: 10px;
+    }
+    h3 {
+        font-size: 16px;
+
+        margin: {
+            top: 1em;
+        }
+    }
+}
+
+.flexSelect {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .form-group {
+        width: 45%;
+    }
 }
 
 button {
@@ -180,11 +322,18 @@ button {
 .active {
     border: none;
     @include active-btn();
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
 }
 
 .continueWith {
+    margin: 1em 0;
     width: 80%;
     align-items: center;
+
     p {
         font-size: 12px;
         text-align: center;
@@ -195,25 +344,97 @@ button {
 .spanning {
     @include flex();
     justify-content: space-between;
-    width: 85%;
+    width: 90%;
+
     h1 {
-        font-size: 20px;
+        font-size: 15px;
         margin-bottom: 1em;
         text-align: left;
         align-self: flex-start;
         display: block;
     }
+
+    .Madbtn {
+        cursor: pointer;
+
+        i {
+            /* text-decoration: none;
+            font-style: normal;
+            border: 1px solid #AAAAAA;
+            color: #AAAAAA;
+            border-radius: 50%;
+            text-align: center;
+            padding: {
+                top:0.2em;
+                left: 0.5em;
+                right: 0.5em;
+                bottom: -1em;
+            } */
+            text-decoration: none;
+            font-style: normal;
+            border: 1px solid #AAAAAA;
+            color: #AAAAAA;
+            border-radius: 50%;
+            font-size: 15px;
+            text-align: center;
+            height: 3.5vh;
+            padding: 0 0.2em;
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            &:hover {
+                border: 1px solid black;
+                color: black;
+            }
+        }
+    }
 }
-.forgot{
-    display: block;
-}
-h1{
+
+h1 {
     display: none;
 }
+
 .cancel_btn {
     justify-content: space-between;
     display: flex;
     width: 100%;
+}
+
+.already_ {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 35% 12% 40%;
+    margin-bottom: 0.5em;
+
+    .already {
+        grid-column: 1/span 1;
+        justify-self: start;
+        font-size: 10px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+}
+
+.opacity {
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.dont_ {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 40% 12% 45%;
+    margin-bottom: 1em;
+
+    .dont {
+        grid-column: 3/span 3;
+        justify-self: start;
+        font-size: 10px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
 }
 
 .Madbtn {
@@ -222,33 +443,52 @@ h1{
 }
 
 .Or {
-    @include flex();
-    justify-content: space-evenly;
     width: 90%;
+    font-size: 12px;
+    text-align: left;
+    margin: 1em 0;
 
-    .empty {
-        width: 40%;
+    .or_ {
+        padding: 0 6px;
+        cursor: pointer;
+
+        &:hover {
+            color: #080808;
+        }
     }
+
 }
 
 .imageUpload {
     @include flex2();
     justify-content: center;
-    background: #F5F7FA;
+    background: $input-bg-color;
     border: 1px solid #DFDFDF;
     box-sizing: border-box;
     border-radius: 10px;
-    height: 200px;
+    height: 25vh;
+    min-height: 100px;
     width: 50%;
+    img {
+        background: $input-bg-color;
+        border: 1px solid #DFDFDF;
+        box-sizing: border-box;
+        border-radius: 10px;
+        height: 25vh;
+        min-height: 100px;
+        width: 100%;
+        display: none;
+    }
 }
 
-.imageUpload::before {
+/* .imageUpload::before {
     color: #939393;
     width: 60%;
     line-height: 1.5;
     text-align: center;
-    content: 'Click here to upload from file';
+    align-content: center;
 }
+ */
 
 a {
     width: 100%;
@@ -257,21 +497,19 @@ a {
 }
 
 .inputImage {
-    display: none;
+    color:pink;
 }
 
-.upload::before {
-    content: 'Upload file';
-}
 
 @mixin upload {
-    background: #F5F7FA;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    margin: 1em 0;
-    width: 40%;
+    margin: {
+        top: 3em;
+    }
+    width: 50%;
     padding: 0.2em 0;
     text-align: center;
+    border: 1px solid grey;
 }
 
 .upload {
@@ -280,11 +518,31 @@ a {
 
 .takePicture {
     @include upload();
-
 }
 
 .takePicture::before {
     content: 'Take picture';
+}
+
+.css-b62m3t-container {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.css-319lph-ValueContainer {
+    height: 45px;
+}
+
+.css-14el2xx-placeholder {
+    padding-bottom: 12px;
+}
+
+.css-1s2u09g-control {
+    height: 45px;
+}
+
+.css-1okebmr-indicatorSeparator {
+    display: none;
 }
 
 select {
@@ -303,18 +561,44 @@ select {
         border-top: 1px solid rgba(0, 0, 0, 0.2);
     }
 }
-.lead{
+
+.lead {
     text-align: center;
+    line-height: 1.1;
+
+    margin: {
+        bottom: 1em;
+    }
+
     font: {
-        size: 30px;
+        size: 1.2em;
+        weight: normal;
     }
 }
+
+.checked {
+    margin: {
+        bottom: 1.5em;
+    }
+}
+
+.title {
+    align-self: flex-start;
+    margin-bottom: 1.2em;
+}
+
 form {
     @include form();
 
-
     .form-group {
         width: 100%;
+    }
+
+    h3 {
+        font: {
+            size: 1.2em;
+            weight: 900;
+        }
     }
 
     label {
@@ -330,6 +614,58 @@ form {
     }
 }
 
+.flex_link {
+    margin-top: 2em;
+}
+
+i {
+    color: red;
+    text-align: left;
+    align-self: left;
+    font-size: 12px;
+}
+
+.camera {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    border-radius: 10px;
+    video {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .takePicture{
+        width: 100%;
+    }
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+.resulthasPhoto {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    canvas {
+        width: 80%;
+        border-radius: 10px;
+        display: none;
+    }
+    .takePicture{
+        width: 50%;
+    }
+}
+#inputfile{
+    display:none;
+}
+
+
 @media screen and (min-width:800px) {
     h1 {
         font-size: 1.5em;
@@ -338,25 +674,83 @@ form {
         display: block;
     }
 
+    .already_ {
+        grid-template-columns: 47% 5% 40%;
+        border: none;
+
+        .already {
+            grid-column: 1/span 1;
+            justify-self: start;
+            font-size: 15px;
+        }
+    }
+
+    .dont_ {
+        grid-template-columns: 40% 4% 40%;
+        border: none;
+
+        .dont {
+            border: none;
+            font-size: 13px;
+        }
+    }
+
     .spanning {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: auto;
-        justify-content: end;
+        display: block;
+
         .cancel_btn {
+            display: grid;
+            grid-template-columns: 15% 60% 20%;
+            grid-template-rows: auto;
+            justify-content: end;
+            width: 100%;
+
             h1 {
-                display: none;
+                justify-self: center;
+                text-align: center;
+                align-self: center;
+                display: block;
+                grid-column: 2 / 2;
+                font-size: 1.2em;
+            }
+
+            .Madbtn {
+                grid-column: 3 / span 3;
+                justify-self: end;
+
+                i {
+                    text-decoration: none;
+                    font-style: normal;
+                    border: 1px solid #AAAAAA;
+                    color: #AAAAAA;
+                    border-radius: 50%;
+                    font-size: 15px;
+                    text-align: center;
+                    height: 3.5vh;
+                    padding: 0 0.5em;
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+
+                    &:hover {
+                        border: 1px solid #1207AB;
+                        color: #1207AB;
+                    }
+                }
             }
         }
+
     }
 
     .flex_btn {
         @include flex_btn2();
+
     }
 
     button {
         @include btn2();
     }
+
     select {
         @include input2();
 
@@ -370,21 +764,30 @@ form {
 
         }
     }
+
     .Or {
-        @include flex();
         width: 70%;
-    justify-content: space-between;
-        .empty {
-            width: 40%;
+        font-size: 12px;
+        text-align: left;
+
+        .or_ {
+            padding: 0 18px;
         }
+
     }
+
     form {
         @include form2();
 
         input {
             @include input2();
         }
+
         button {
+            @include continue_btn2();
+        }
+
+        .continue_upload {
             @include continue_btn2();
             width: 70%;
         }

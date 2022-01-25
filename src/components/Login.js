@@ -1,39 +1,45 @@
 import React from 'react';
+import { useEffect } from 'react'
 import Backdrop from './HOC'
 import { Link } from 'react-router-dom'
 import Formgroup from '../layouts/FormGroup';
 import ContinueBtn from "../layouts/ContinueBtn";
+import FlexBtn from '../layouts/Flex_btn';/* 
+import FacebookLogo from '../img/facebookLogo.svg' */
+import Google from '.././layouts/socials/Google'
+import Facebook from '.././layouts/socials/Facebook'
+import useForm from '../useForm';
+import validate from '../validateInfo';
 function Login(props) {
+    useEffect(() => { document.title = 'Login' })
+    const {handleChange, values, submit, errors} = useForm(validate);
     return (
         <>
+            <span className='dont_'>
+                <Link className="dont opacity" to='/signup' style={{ color: '#262B33' }}>Don't have an account?</Link>
+            </span>
+            <FlexBtn login='Login to continue' signup='Sign up to continue' />
+            <span className='flex_btn'>
+                <h3>Login with</h3>
+            </span>
             <span className="flex_btn">
-                <button className="login active">
-                    Login to continue
-                </button>
-                <button className="signUp ">
-                    Sign up to continue
-                </button>
+                <Google />
+                <small> OR </small>
+                <Facebook />
+                {/* <button className="signUp socials regular">
+                    <img src={FacebookLogo} alt='facebooklogo' />  Facebook
+                </button> */}
             </span>
-            <span className="flex_btn continueWith">
-                <p className="goggle">
-                    CONTINUE WITH <span style={{ color: 'blue' }}>G</span><span style={{ color: 'red' }}>o</span><span style={{ color: 'yellow' }}>o</span><span style={{ color: 'blue' }}>g</span><span style={{ color: 'green' }}>l</span><span style={{ color: 'red' }}>e </span></p>
-                <p className="facebook " >
-                    CONTINUE WITH <span style={{ color: 'blue' }}> Facebook </span>
-                </p>
-            </span>
-            <div className='Or'>
-                <svg className='empty' xmlns="http://www.w3.org/2000/svg" width="259" height="2" viewBox="0 0 259 2" fill="none">
-                    <path d="M0 1L259 1.00002" stroke="#B3B3B3" stroke-width="2" />
-                </svg> OR <svg className='empty' xmlns="http://www.w3.org/2000/svg" width="259" height="2" viewBox="0 0 259 2" fill="none">
-                    <path d="M0 1L259 1.00002" stroke="#B3B3B3" stroke-width="2" />
-                </svg>
-            </div>
-            <form action="post">
-                <Formgroup label='Email' htmlFor='Email' type='email' name='email' placeholder='Enter your email'/>
-                <Formgroup label='Password' htmlFor='password' type='password' name='password' placeholder='Enter password'/>
+
+            <form action="post" name="form" method="post" validate="true" autoComplete="on" onSubmit={submit}>
+                <h3 className='title'>LOGIN</h3>
+                <Formgroup value={values.email} onChange={handleChange} required size="10" maxLength="50" label='Email' htmlFor='email' id='email' type='email' name='email' placeholder='Enter your email' />
+                {errors.email && <i>{errors.email}</i>}
+                <Formgroup value={values.password} onChange={handleChange} required label='Password' minLength='8' htmlFor='password' id='password' type='password' name='password' placeholder='Enter password' />
+                {errors.password && <i>{errors.password}</i>}
                 <ContinueBtn to='signup' />
             </form>
-            <Link to='/forgotpassword' style={{ color: '#262B33', marginTop: '1em' }}>Forgot Password?</Link>
+            <Link to='/forgotpassword' className='opacity' style={{ color: '#262B33', marginTop: '2em', fontSize: '15px' }}>Forgot Password?</Link>
         </>
     )
 }
