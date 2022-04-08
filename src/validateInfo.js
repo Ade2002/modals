@@ -37,12 +37,5 @@ export default function validateInfo(values) {
     }
 
     //Choose PLan
-
-
-
-
-
-
-
     return errors;
 }
